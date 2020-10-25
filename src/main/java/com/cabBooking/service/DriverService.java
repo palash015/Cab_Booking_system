@@ -9,4 +9,6 @@ import org.springframework.stereotype.Service;
 public interface DriverService {
 
     ApiResponse add(Driver driver);
+
+    Driver getDriver(Integer driverId);
 }

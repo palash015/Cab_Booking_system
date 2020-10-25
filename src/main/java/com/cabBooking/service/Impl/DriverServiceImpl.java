@@ -2,6 +2,7 @@ package com.cabBooking.service.Impl;
 
 import com.cabBooking.Model.ApiResponse;
 import com.cabBooking.Model.ErrorResponse;
+import com.cabBooking.Utils.enums.AccountStatus;
 import com.cabBooking.Utils.enums.Status;
 import com.cabBooking.entities.Driver;
 import com.cabBooking.repository.DriverRepository;
@@ -33,10 +34,18 @@ public class DriverServiceImpl implements DriverService {
             apiResponse.setErrorResponse(errorResponse);
             return apiResponse;
         }
+        driver.setAccountStatus(AccountStatus.ACTIVE);
         driverRepository.add(driver);
         log.info("driver added success " +  driver.getId());
         apiResponse.setStatus(Status.SUCCESS);
 
         return apiResponse;
+    }
+
+    @Override
+    public Driver getDriver(Integer driverId)
+    {
+        if(driverId == null || driverId <= 0) return null;
+        return driverRepository.get(driverId);
     }
 }

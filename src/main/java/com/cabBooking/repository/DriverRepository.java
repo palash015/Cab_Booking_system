@@ -15,11 +15,12 @@ public class DriverRepository {
     private Map<Integer , Driver> driverMap = new HashMap<>();
     private Set<String> licenseSet = new HashSet<>();
 
-    public void add(Driver driver)
+    public Driver add(Driver driver)
     {
         driver.setId(count++);
         driverMap.put(driver.getId() , driver);
         licenseSet.add(driver.getLicenceNumber());
+        return driver;
     }
 
     public Driver get(Integer id)

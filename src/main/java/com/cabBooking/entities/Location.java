@@ -9,8 +9,6 @@ import java.io.Serializable;
 @Entity
 public class Location implements Serializable {
 
-    private static final long serialVersionUID = -6935663821232865289L;
-
     @Transient
     private static final double MIN_LATITUDE = -90;
 
@@ -31,4 +29,53 @@ public class Location implements Serializable {
 
     @SerializedName("longitude")
     private double longitude;
+
+    public Long getId () {
+        return id;
+    }
+
+    public void setId (Long id) {
+        this.id = id;
+    }
+
+    public double getLatitude () {
+        return latitude;
+    }
+
+    public void setLatitude (double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude () {
+        return longitude;
+    }
+
+    public void setLongitude (double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Location(double latitude, double longitude) {
+
+        if (!Location.validateCoordinates(latitude, longitude)) {
+            throw new IllegalArgumentException("Invalid latitude or longitude.");
+        }
+
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+
+    public static boolean validateCoordinates(double latitude, double longitude) {
+        return Location.validateLatitude(latitude) && Location.validateLongitude(longitude);
+    }
+
+
+    public static boolean validateLatitude(double latitude) {
+        return !(latitude > Location.MAX_LATITUDE || latitude < Location.MIN_LATITUDE);
+    }
+
+
+    public static boolean validateLongitude(double longitude) {
+        return !(longitude < Location.MIN_LONGITUDE || longitude > Location.MAX_LONGITUDE);
+    }
 }
