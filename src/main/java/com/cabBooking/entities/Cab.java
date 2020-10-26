@@ -1,6 +1,7 @@
 package com.cabBooking.entities;
 
-import com.cabBooking.Interface.CabState;
+import com.cabBooking.Utils.enums.CabState;
+import com.cabBooking.Utils.enums.CabType;
 import com.cabBooking.Utils.enums.CarType;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,8 +19,8 @@ public class Cab extends Vehicle implements Serializable {
     @SerializedName("cab_state")
     private CabState cabState;
 
-    @SerializedName("car_type")
-    private CarType carType;
+    @SerializedName("cab_type")
+    private CabType cabType;
 
     @SerializedName("location")
     private Location location;
@@ -44,12 +45,12 @@ public class Cab extends Vehicle implements Serializable {
         this.cabState = cabState;
     }
 
-    public CarType getCarType () {
-        return carType;
+    public CabType getCabType () {
+        return cabType;
     }
 
-    public void setCarType (CarType carType) {
-        this.carType = carType;
+    public void setCabType (CarType carType) {
+        this.cabType = cabType;
     }
 
     public Location getLocation () {

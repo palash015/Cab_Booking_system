@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.io.Serializable;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 @Entity
 public class Location implements Serializable {
 
@@ -77,5 +80,9 @@ public class Location implements Serializable {
 
     public static boolean validateLongitude(double longitude) {
         return !(longitude < Location.MIN_LONGITUDE || longitude > Location.MAX_LONGITUDE);
+    }
+
+    public Double distance(Location location2) {
+        return sqrt( pow(this.latitude - location2.latitude, 2) + pow(this.longitude - location2.longitude, 2) );
     }
 }

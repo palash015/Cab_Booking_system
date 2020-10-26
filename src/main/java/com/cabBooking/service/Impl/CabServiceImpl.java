@@ -2,6 +2,9 @@ package com.cabBooking.service.Impl;
 
 import com.cabBooking.Model.ApiResponse;
 import com.cabBooking.Model.ErrorResponse;
+import com.cabBooking.Utils.enums.CabState;
+import com.cabBooking.Utils.enums.CabType;
+import com.cabBooking.Utils.enums.CarType;
 import com.cabBooking.Utils.enums.Status;
 import com.cabBooking.entities.Cab;
 import com.cabBooking.entities.Location;
@@ -13,7 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class CabServiceImpl implements CabService {
@@ -44,6 +50,7 @@ public class CabServiceImpl implements CabService {
             apiResponse.setErrorResponse(errorResponse);
             return apiResponse;
         }
+        cab.setCabState(CabState.ON_DUTY);
         cab = cabRepository.register(cab);
         log.info("driver added success " +  cab.getId());
         apiResponse.setStatus(Status.SUCCESS);
@@ -67,4 +74,19 @@ public class CabServiceImpl implements CabService {
         cab.setLocation(location);
         cabRepository.updateCab(cab);
     }
+
+    @Override
+    public List<Cab> getOnDutyCabs(CarType carType , CabType cabType)
+    {
+        List<Cab> onDutyCabs = cabRepository.getOnDutyCabs();
+        onDutyCabs = onDutyCabs.stream().filter(s -> carType.equals(s.getCarType())).collect(Collectors
+                .toCollection(ArrayList::new));
+        if(cabType != null)
+        {
+            return onDutyCabs.stream().filter(s -> cabType.equals(s.getCabType())).collect(Collectors
+                    .toCollection(ArrayList::new));
+        }
+        return onDutyCabs;
+    }
+
 }
